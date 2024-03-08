@@ -5,18 +5,76 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
+
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id Int @id @unique @default(autoincrement())
-  createdAt DateTime @default(now())
-  username String 
-  password String
-  email String @unique
+  id        Int          @id @unique @default(autoincrement())
+  createdAt DateTime     @default(now())
+  username  String       @unique
+  password  String
+  email     String       @unique
+  mod       Moderators[]
+  member    Members[]
+  message   Messages[]
+  server    Servers[]
 }
+
+model Rooms {
+  id        Int          @id @unique @default(autoincrement())
+  room_id   String       @unique
+  server_id String
+  room_name String       @unique
+  servers   Servers      @relation(fields: [server_id], references: [server_id])
+  mod       Moderators[]
+  messages  Messages[]
+}
+
+model Servers {
+  id        Int     @id @unique @default(autoincrement())
+  server_id String  @unique
+  server_name String @unique
+  user_id   Int
+  user    User   @relation(fields: [user_id], references: [id])  
+  room      Rooms[]
+  member Members[]
+}
+
+model Moderators {
+  id      Int    @id @unique @default(autoincrement())
+  room_id String
+  mod_id  Int
+  rooms   Rooms  @relation(fields: [room_id], references: [room_id])
+  user    User   @relation(fields: [mod_id], references: [id])
+}
+
+model Members {
+  id      Int    @id @unique @default(autoincrement())
+  server_id String
+  user_id Int
+  isadmin Boolean @default(false)
+  server  Servers  @relation(fields: [server_id], references: [server_id])
+  user    User   @relation(fields: [user_id], references: [id])
+}
+
+model Messages {
+  id        Int      @id @unique @default(autoincrement())
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  room_id   String
+  user_id   Int
+  OfType    String
+  rooms     Rooms    @relation(fields: [room_id], references: [room_id])
+  user      User     @relation(fields: [user_id], references: [id])
+}
+
+
