@@ -7,7 +7,7 @@ module.exports = {
     getUserData : function (req ,res ) {
         
         if(req.username && req.email){
-            res.json({
+            res.status(200).json({
                 "user_id" : req.user_id,
                 "username" : req.username,
                 "email" : req.email
@@ -486,7 +486,21 @@ module.exports = {
                     },
                     relationLoadStrategy: 'join',
                     include: {
-                      room: true,
+                      room: {
+                        include : {
+                            messages : {
+                                include : {
+                                    user : {
+                                        select : {
+                                            id : true,
+                                            email : true,
+                                            username : true
+                                        }
+                                    }
+                                }
+                            },
+                        }
+                      },
                       member: {
                         include : {
                             user: true
@@ -538,7 +552,22 @@ module.exports = {
                                     username : true
                                 }
                             },
-                            room: true,
+                            room: {
+                                include : {
+                                    messages : {
+                                        include : {
+                                            user: {
+                                                select : {
+                                                    id : true,
+                                                    email : true,
+                                                    username : true
+                                                }
+                                            }
+                                        }
+                                    },
+                                    
+                                }
+                            },
                             member : {
                                 include : {
                                     user : true

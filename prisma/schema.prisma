@@ -38,6 +38,8 @@ model Rooms {
   messages  Messages[]
 }
 
+
+
 model Servers {
   id        Int     @id @unique @default(autoincrement())
   server_id String  @unique
@@ -68,13 +70,12 @@ model Members {
 model Messages {
   id        Int      @id @unique @default(autoincrement())
   message   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime
+  createdAt String
+  updatedAt String?
   room_id   String
   user_id   Int
   OfType    String
   rooms     Rooms    @relation(fields: [room_id], references: [room_id])
   user      User     @relation(fields: [user_id], references: [id])
 }
-
 

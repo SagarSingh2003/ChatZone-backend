@@ -33,4 +33,5 @@ router.delete('/deleteRoom/:room_id' , authmiddleware , userController.deleteRoo
 router.delete('/leaveServer/:member_id', authmiddleware , userController.leaveServer);
 
 
+
 module.exports = router;
