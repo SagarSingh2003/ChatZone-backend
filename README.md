@@ -12,6 +12,8 @@ ce the app is complete):
 https://github.com/SagarSingh2003/chat-applciation-backend/assets/129133613/691022d8-e732-4f9c-b0a7-8b7ee73f8733
 
 
+https://github.com/SagarSingh2003/chat-applciation-backend/assets/129133613/51ad0ac2-f251-44f8-98ee-d506ac074412
+
 
 
 https://github.com/SagarSingh2003/chat-applciation-backend/assets/129133613/99026907-76a7-44f4-89a6-6edb21dc0da2
@@ -27,7 +29,7 @@ https://github.com/SagarSingh2003/chat-applciation-backend/assets/129133613/9902
 - backend written following MVC (model view controller) architecture
   
 
-Endpoints : 
+## Endpoints : 
 
 - /authenticate/signin
 - /authenticate/signup
